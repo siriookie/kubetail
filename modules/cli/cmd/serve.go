@@ -41,6 +41,7 @@ import (
 	"github.com/kubetail-org/kubetail/modules/shared/k8shelpers"
 
 	"github.com/kubetail-org/kubetail/modules/cli/internal/tunnel"
+	_ "net/http/pprof"
 )
 
 const serveHelp = `
@@ -159,6 +160,12 @@ var serveCmd = &cobra.Command{
 			err := server.Serve(listener)
 			if err != nil && err != http.ErrServerClosed {
 				zlog.Fatal().Err(err).Send()
+			}
+		}()
+		go func() {
+			zlog.Info().Msg("Starting pprof server on :6060")
+			if err := http.ListenAndServe("localhost:6060", nil); err != nil {
+				zlog.Error().Err(err).Msg("pprof server error")
 			}
 		}()
 

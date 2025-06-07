@@ -293,7 +293,7 @@ func DefaultConfig() *Config {
 	cfg.ClusterAgent.Logging.Enabled = true
 	cfg.ClusterAgent.Logging.Level = "info"
 	cfg.ClusterAgent.Logging.Format = "json"
-
+	cfg.KubeconfigPath = "C:\\Users\\juju\\.kube\\ack-hex-test.yaml"
 	return cfg
 }
 
